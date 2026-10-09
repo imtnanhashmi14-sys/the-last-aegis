@@ -1,15 +1,20 @@
 
-name: Android Build
+name: Android APK Build
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Check project ZIP
-        run: ls -la
+        run: |
+          ls -la
+          test -f THE_LAST_AEGIS_ANDROID_FULL_PROJECT.zip
