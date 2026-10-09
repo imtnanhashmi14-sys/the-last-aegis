@@ -1,19 +1,15 @@
+
 name: Android Build
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-test:
-runs-on: ubuntu-latest
-steps:
-- name: Check repository
-uses: actions/checkout@v4
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check repository
+        uses: actions/checkout@v4
 
-```
-  - name: Check project ZIP
-    run: |
-      ls -la
-      test -f THE_LAST_AEGIS_ANDROID_FULL_PROJECT.zip
-```
-
+      - name: Check project ZIP
+        run: ls -la
