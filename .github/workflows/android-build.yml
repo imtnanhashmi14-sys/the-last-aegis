@@ -6,12 +6,11 @@ workflow_dispatch:
 jobs:
 build:
 runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v4
 
 ```
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
-
   - name: Set up Java
     uses: actions/setup-java@v4
     with:
@@ -34,7 +33,7 @@ steps:
       cd "$PROJECT_DIR"
       gradle assembleDebug bundleRelease
 
-  - name: Save build files
+  - name: Upload build files
     uses: actions/upload-artifact@v4
     with:
       name: THE-LAST-AEGIS-Android-Build
