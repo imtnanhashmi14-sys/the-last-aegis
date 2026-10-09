@@ -1,0 +1,45 @@
+name: Build THE LAST AEGIS Android
+
+on:
+workflow_dispatch:
+
+jobs:
+build:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Set up Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '17'
+
+  - name: Set up Gradle
+    uses: gradle/actions/setup-gradle@v4
+    with:
+      gradle-version: '8.11.1'
+
+  - name: Extract Android project
+    run: |
+      unzip THE_LAST_AEGIS_ANDROID_FULL_PROJECT.zip -d extracted
+      find extracted -name settings.gradle -o -name settings.gradle.kts
+
+  - name: Build Android APK and AAB
+    run: |
+      PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -print -quit)")
+      cd "$PROJECT_DIR"
+      gradle assembleDebug bundleRelease
+
+  - name: Save build files
+    uses: actions/upload-artifact@v4
+    with:
+      name: THE-LAST-AEGIS-Android-Build
+      path: |
+        extracted/**/*.apk
+        extracted/**/*.aab
+      if-no-files-found: error
+```
